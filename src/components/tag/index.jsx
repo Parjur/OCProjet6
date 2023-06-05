@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-const TagWrapper = styled.div`
-    width: 650px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-`
-
 const TagBox = styled.p`
     min-width: 75px;
     height: 25px;
@@ -24,16 +17,10 @@ const TagBox = styled.p`
     align-items: center;
 `
 
-function Tag() {
+function Tag({tags}) {
     return (
-        <TagWrapper>
-           <TagBox>Cosy</TagBox>
-           <TagBox>Canal</TagBox>
-           <TagBox>Paris 10</TagBox>
-           <TagBox>Texte super long pour tester la réaction</TagBox>
-           <TagBox>Ce texte super long doit être en bas des autres</TagBox>
-        </TagWrapper>
-    )
+            <TagBox>{tags}</TagBox>
+        )
 }
 
 export default Tag

@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 const CardWrapper = styled.div`
     width: 340px;
@@ -6,7 +7,7 @@ const CardWrapper = styled.div`
     background-color: #FF6060;
     background-position: center;
     background-size: cover;
-    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.3) 100%), url('');
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.3) 100%), url(${props => props.cover});
     border-radius: 10px;
     padding: 0px;
 `
@@ -26,16 +27,21 @@ const CardTitle = styled.p`
     width: auto;
     margin: 20px;
 `
+const CardLinks = styled(Link)`
+    text-decoration: none
+`
 
-function Card() {
-    
+function Card({id, title, cover}) {
+    const url = `/logement/${id}`
     
     return (
-    <CardWrapper>
+    <CardLinks to={url}>
+    <CardWrapper cover={cover}>
         <CardBox>
-            <CardTitle>Titre de la location</CardTitle>
+            <CardTitle>{title}</CardTitle>
         </CardBox>
     </CardWrapper>
+    </ CardLinks>
     )
 
 }

@@ -1,13 +1,14 @@
 import Tag from "../../components/tag"
-import Description from "../../components/description"
+
 import Drop from "../../components/drop"
 import styled from "styled-components"
-import avatar from '../../assets/Avatar.jpg'
-import Caroussel from "../../components/carrousel"
+import Carousel from "../../components/carrousel"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-regular-svg-icons'
-
-
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+import { useParams } from "react-router-dom"
+import data from '../../assets/houses.json'
+import { useState } from "react"
+import { useEffect } from "react"
 
 
 const TopPart = styled.div`
@@ -21,9 +22,9 @@ const TopPart = styled.div`
 const LowerPart = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap: 76px;
+    grid-column-gap: 65px;
     width: 1240px;
-    margin-top: 24px;
+    margin-top: 0px;
 `
 const Title = styled.div`
     h2 {
@@ -60,34 +61,84 @@ const Avatar = styled.div`
     }
 `
 const RatingWrapper = styled.div`
-    color: #FF6060;
+    color: #E3E3E3;
     font-size: 24px;
     display: flex;
-    
     align-items: end;
     gap: 15px;
-
+    .filled {
+        color: #FF6060;
+    }
+    
 
 `
 const DropWrapper = styled.div`
-    width: 546px;
+    width: 100%;
+    
+`
+const TagWrapper = styled.div`
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 `
 
+
+
 function HouseCard() {
+    const { id } = useParams()
+    const datas = data.filter(data => data.id === id)
+    const house = datas.pop()
+    const houseTags = house.tags
+    
+    const houseEquipments = house.equipments.map((items, index) => (
+        <li key={index}>{items}</li> // Listing des équipements à partir du JSON
+    ))
+    const rating = house.rating
+    useEffect(() => {
+        const stars = document.getElementsByClassName('fa-star');
+        for(let i = 0 ; i < stars.length ; i++){
+            const starValue = i + 1;
+            if(starValue <= rating){
+                stars[i].classList.add('filled')
+            } else {
+                stars[i].classList.remove('filled')
+            }
+        }
+    }, [rating])
+    
+    
+
     return (
         <div>
             
-            <Caroussel />
+            
+            <Carousel 
+            pictures={house.pictures}
+            title={house.title}
+                
+            /> 
+            
+            
+            
             <TopPart>
-                <Title>
-                    <h2>Cozy loft on the Canal Saint-Martin</h2>
-                    <h3>Paris, Île-de-France</h3>
+                <Title >
+                    <h2>{house.title}</h2>
+                    <h3>{house.location}</h3>
                 </Title>
                 <Avatar>
-                    <p>Nom de profil</p>
-                    <img src={avatar} alt="avatar" />
+                    <p>{house.host.name}</p>
+                    <img src={house.host.picture} alt="avatar" />
                 </Avatar>
-                <Tag />
+                <TagWrapper>
+                    {houseTags.map((items, index) => (
+                        <Tag 
+                        key={index}
+                        tags={items}
+                    /> 
+                    ))}
+                </TagWrapper>
+                
                 <RatingWrapper>
                     <FontAwesomeIcon icon={faStar} />
                     <FontAwesomeIcon icon={faStar} />
@@ -99,12 +150,18 @@ function HouseCard() {
             
             <LowerPart>
                 <DropWrapper>
-                    <Drop />
-                    <Description />
+                    <Drop 
+                    title="Description"
+                    id={id}
+                    description={house.description}
+                    />
                 </DropWrapper>
                 <DropWrapper>
-                    <Drop />
-                    <Description />
+                    <Drop 
+                    title="Équipements"
+                    id={id}
+                    description={houseEquipments}
+                    />
                 </DropWrapper>
             </LowerPart>
         </div>

@@ -2,6 +2,7 @@ import image from '../../assets/img_about.png'
 import Description from '../../components/description'
 import Drop from '../../components/drop'
 import styled from 'styled-components'
+import data from '../../assets/about.json'
 
 const AboutImageBox = styled.div`
     position: relative;
@@ -44,19 +45,18 @@ function About() {
                 <ShadowImageCover />
             </AboutImageBox>
             <Droppers>
+                {data.map((about, index) => (
                 <DropWrapper>
-                    <Drop />
-                </DropWrapper>
-                <DropWrapper>
-                    <Drop />
-                    <Description />
-                </DropWrapper>
-                <DropWrapper>
-                    <Drop />
-                </DropWrapper>
-                <DropWrapper>
-                    <Drop />
-                </DropWrapper>
+                    <Drop
+                    key={`category_${index}`}
+                    id={`collapsible_${index}`} 
+                    title={about.category}
+                    description={about.description}
+                    />
+                    
+                </DropWrapper>   
+                ))}
+                
             </Droppers>
         </div>
     )}

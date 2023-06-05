@@ -2,8 +2,8 @@ import logo from '../../assets/logoFooter.png'
 import styled from 'styled-components'
 
 const FooterBox = styled.div`
-    width: 1240px;
-    height: 209px;
+    width: 100%;
+    height: 200px;
     background-color: #000000;
     display: flex;
     flex-direction: column;

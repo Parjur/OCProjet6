@@ -1,6 +1,6 @@
 import Card from "../card"
 import styled from "styled-components"
-
+import data from '../../assets/houses.json'
 
 const CardsNavBox = styled.div`
     width: 1140px;
@@ -16,16 +16,18 @@ const CardsNavBox = styled.div`
     
 `
 
-function CardNav() { /* Delete les cards superflues quand la fonction sera prête*/
+function CardNav() { 
     return (
         <CardsNavBox>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {data.map((house) => (
+            <Card 
+                key={house.id}
+                id={house.id}
+                title={house.title}
+                cover={house.cover}
+            />  
+            ))}
+            
         </CardsNavBox>
     )
 }
