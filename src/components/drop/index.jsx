@@ -6,8 +6,7 @@ import Description from "../description"
 
 const DropBox = styled.div`
     max-width: 987px;
-    min-width: 546px;
-    
+    pointer-events: none;
     height: 47px;
     background-color: #FF6060;
     border-radius: 5px;
@@ -20,6 +19,13 @@ const DropBox = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media all and (max-width: 1240px){
+        max-width: 90vw;
+    }
+    @media all and (max-width: 550px){
+        font-size: 13px;
+        height: 29px;
+    }
 `
 const rotatingForward = keyframes`
   0% {
@@ -28,7 +34,7 @@ const rotatingForward = keyframes`
   100% {
     transform: rotate(360deg);
   }
-`;
+`
 
 const rotatingBackward = keyframes`
   0% {
@@ -40,17 +46,16 @@ const rotatingBackward = keyframes`
 `;
 
 const Vector = styled.img`
-    &.rotating_forward {
-        animation: ${rotatingForward} 1s forwards;
+    &.expanded {
+        animation: ${rotatingForward} 0.5s forwards;
     }
-
-    &.rotating_backward {
-        animation: ${rotatingBackward} 1s forwards;
+    &.hidden {
+        animation: ${rotatingBackward} 0.5s forwards;
     }
     object-fit: contain;
     width: 24px;
-    transform: ${({ rotating }) => (rotating ? 'rotate(360deg)' : 'rotate(180deg)')};
-    transition: transform 1s;
+    transform: rotate(180deg);
+    pointer-events: auto;
     &:hover {
         cursor: pointer;
     }
@@ -59,34 +64,41 @@ const Vector = styled.img`
 
 function Collapsible({title, description}){
     
-    
+    // Collapsing parameters
     const config = {
-        duration: 1000,
+        duration: 500,
         
     };
     const { getCollapseProps, getToggleProps, isExpanded } = useCollapse(config);
-    
+    // Arrow animation for collapse
     const [animationState, setAnimationState] = useState(0);
-    const handClick = () => {
-        let newState = animationState + 1;
-        if (newState >= 2) {
-            newState = 0;
+    const vectorAnimation = () => {
+        let newState = animationState;
+        if(newState === 0){
+            newState++;
+            setAnimationState(newState);
+        } else if(newState === 1){
+            newState++;
+            setAnimationState(newState);
+        } else {
+            newState = 1;
+            setAnimationState(newState);
         }
-        setAnimationState(newState);
-    };
-
+    }
+    
     return (
         <div className="collapsible">
-
             <DropBox className="header" {...getToggleProps()}>
                 <p>{title}</p>
                 <Vector 
                 expanded={isExpanded} 
                 src={image} 
-                className={ animationState === 1 ? "rotating_forward" : animationState === 2 ? "rotating_backward" : "" }
-                onClick={handClick}
-                rotation={animationState > 0}
-                alt="vector" />
+                id="vector"
+                onClick={vectorAnimation}
+                className={ animationState === 1 ? "expanded" : animationState === 2 ? "hidden" : "" }
+                rotation={animationState >= 0}
+                alt="vector" 
+                />
             </DropBox>
 
             <div {...getCollapseProps()}>
@@ -102,13 +114,11 @@ function Collapsible({title, description}){
 
 function Drop({title, id, description}) {
     return (
-            
-                    <Collapsible 
-                    title={title}
-                    key={id}
-                    description={description}
-                    />
-            
+        <Collapsible 
+        title={title}
+        key={id}
+        description={description}
+        />
     )
 }
 

@@ -3,7 +3,7 @@ import styled from "styled-components"
 import data from '../../assets/houses.json'
 
 const CardsNavBox = styled.div`
-    width: 1140px;
+    max-width: 1140px;
     height: auto;
     padding: 50px;
     background-color: #F0F0F0;
@@ -12,7 +12,17 @@ const CardsNavBox = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 60px;
     grid-row-gap: 50px;
-    
+    @media all and (max-width: 1240px){
+        grid-template-columns: 1fr 1fr; 
+        width: 90vw;
+        padding: 0px;
+        background-color: white; 
+    }
+    @media all and (max-width: 767px){
+        grid-template-columns: 1fr;
+        padding: 0px;
+        border-radius: 10px;
+    }
     
 `
 
@@ -27,7 +37,6 @@ function CardNav() {
                 cover={house.cover}
             />  
             ))}
-            
         </CardsNavBox>
     )
 }

@@ -9,8 +9,6 @@ import Header from './components/header';
 import Footer from './components/footer';
 import GlobalStyle from './styles/GlobalStyle';
 
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -24,7 +22,6 @@ root.render(
         <Route path='/*' element={<Error404 />} />
       </Routes>
       <Footer />
-      
     </Router>
   </React.StrictMode>
 );

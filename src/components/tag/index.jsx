@@ -15,6 +15,11 @@ const TagBox = styled.p`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media all and (max-width: 550px){
+        height: 16px;
+        border-radius: 5px;
+        font-size: 10px;
+    }
 `
 
 function Tag({tags}) {
