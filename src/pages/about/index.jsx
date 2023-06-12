@@ -77,12 +77,10 @@ function About() {
                 {data.map((about, index) => (
                 <DropWrapper key={`category_${index}`}>
                     <Drop
-                    
                     id={`collapsible_${index}`} 
                     title={about.category}
                     description={about.description}
                     />
-                    
                 </DropWrapper>   
                 ))}
             </Droppers>
