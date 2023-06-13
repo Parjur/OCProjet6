@@ -1,49 +1,22 @@
-import styled from "styled-components"
 import { Link } from "react-router-dom"
-
-const CardBox = styled.div`
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    display: flex;
-    align-items: flex-end;
-`
-
-const CardTitle = styled.p`
-    color: #FFFFFF;
-    font-size: 18px;
-    height: auto;
-    width: auto;
-    margin: 20px;
-`
-const CardLinks = styled(Link)`
-width: 340px;
-height: 340px;
-background-color: #FF6060;
-background-position: center;
-background-size: cover;
-background-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.3) 100%), url(${props => props.cover});
-border-radius: 10px;
-padding: 0px;
-@media all and (max-width: 1240px){
-    width: 100%;
-    height: 300px;      
-}
-@media all and (max-width: 426px){
-    height: 255px;
-    width: 90vw;
-}
-`
+import '../../styles/components/card.css'
+import { useRef, useEffect } from "react"
 
 function Card({id, title, cover}) {
     const url = `/logement/${id}`
-    
+    const cardLinkRef = useRef(null);
+
+    useEffect(() => {
+        if (cardLinkRef.current) {
+        cardLinkRef.current.style.backgroundImage = `linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.3) 100%), url(${cover})`;
+        }
+    }, [cover]);
     return (
-    <CardLinks to={url} cover={cover}>
-        <CardBox>
-            <CardTitle>{title}</CardTitle>
-        </CardBox>
-    </ CardLinks>
+    <Link className="cardLink" to={url} ref={cardLinkRef}>
+        <div id="cardBox">
+            <p>{title}</p>
+        </div>
+    </Link>
     )
 }
 

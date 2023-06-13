@@ -1,0 +1,27 @@
+#description{
+    max-width: 100%;
+    background-color: #F7F7F7;
+    border-radius: 5px;
+    padding: 27px 18px 19px;
+    color: #FF6060;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 34px;
+    margin-bottom: 31px;
+    list-style: none;
+
+}
+@media all and (max-width: 1240px){
+    #description{
+        box-sizing: border-box;
+        width: 90vw;
+    }
+
+}
+@media all and (max-width: 550px){
+    #description{
+        font-size: 12px;
+        line-height: 20px;
+
+    }
+}
